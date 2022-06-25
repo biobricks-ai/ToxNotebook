@@ -1,0 +1,60 @@
+---
+title: "Tox Notebook"
+always_allow_html: true
+output:
+  html_document: default
+  pdf_document: default
+---
+
+# Introduction 
+
+This notebook reports toxicology features of interest from CompTox and ICE.
+
+# Endpoints of interest
+
+The endpoints of interest used in this notebook are:
+
+Acute Toxicity: Eye Irritation, Skin Irritation, Skin Sensitization, Repeat Dose Toxicity, Developmental Reproductive Toxicity, Carcinogenicity, Genotoxicity, Toxicokinetics, Metabolism, Dermal Penetration, Inhalation, Neurotoxicity, Type 1 allergy, Photo allergy, Photo sensitization, Phototoxicity
+
+# Load required libraries
+```{r, message=FALSE}
+library(DT)
+library(arrow)
+library(dplyr)
+library(tidyr)
+```
+
+# Acute Toxicity
+
+## Eye Irritation
+```{r, message=FALSE}
+eye_irritation <- read_parquet("../../ICE/data/Eye_Irritation.parquet") |> 
+  select("Chemical Name", "Endpoint")
+datatable(eye_irritation)
+```
+
+## Dermal Toxicity
+```{r, message=FALSE}
+dermal_toxicity <- read_parquet("../../ICE/data/Acute_Dermal_Toxicity.parquet") |> 
+  select("Product Name", "Active Ingredient", "Test Organism", 
+         "Dose (mg/kg)", "Clinical Observations", "Gross Pathology")
+datatable(dermal_toxicity)
+```
+
+## Inhalation Toxicity 
+```{r, message=FALSE}
+inhalation_toxicity <- read_parquet("../../ICE/data/Acute_Inhalation_Toxicity.parquet") |> 
+  select("Product Name", "Active Ingredient", "Test Organism", 
+         "Clinical Observations", "Gross Pathology")
+datatable(inhalation_toxicity)
+```
+
+## Carcinogenic 
+```{r, message=FALSE}
+Cancer <- read_parquet("../../ICE/data/Cancer.parquet") |> 
+  select("Formulation Name", "Chemical Name", "Species", 
+         "Level of evidence", "Tissue", "Location", "Lesion", "Response", 
+         "PMID")
+datatable(Cancer)
+```
+
