@@ -12,9 +12,8 @@ This notebook reports toxicology features of interest from CompTox and ICE.
 
 # Endpoints of interest
 
-The endpoints of interest used in this notebook are:
-
-Acute Toxicity: Eye Irritation, Skin Irritation, Skin Sensitization, Repeat Dose Toxicity, Developmental Reproductive Toxicity, Carcinogenicity, Genotoxicity, Toxicokinetics, Metabolism, Dermal Penetration, Inhalation, Neurotoxicity, Type 1 allergy, Photo allergy, Photo sensitization, Phototoxicity
+The endpoints of interest used in this notebook include but are not limited to:
+- Acute Toxicity: Eye Irritation, Skin Irritation, Skin Sensitization, Repeat Dose Toxicity, Developmental Reproductive Toxicity, Carcinogenicity, Genotoxicity, Toxicokinetics, Metabolism, Dermal Penetration, Inhalation, Neurotoxicity, Type 1 allergy, Photo allergy, Photo sensitization, Phototoxicity
 
 # Load required libraries
 ```{r, message=FALSE}
@@ -24,21 +23,13 @@ library(dplyr)
 library(tidyr)
 ```
 
-# Acute Toxicity
+# Toxicity
 
 ## Eye Irritation
 ```{r, message=FALSE}
 eye_irritation <- read_parquet("../../ICE/data/Eye_Irritation.parquet") |> 
   select("Chemical Name", "Endpoint")
-datatable(eye_irritation)
-```
-
-## Dermal Toxicity
-```{r, message=FALSE}
-dermal_toxicity <- read_parquet("../../ICE/data/Acute_Dermal_Toxicity.parquet") |> 
-  select("Product Name", "Active Ingredient", "Test Organism", 
-         "Dose (mg/kg)", "Clinical Observations", "Gross Pathology")
-datatable(dermal_toxicity)
+datatable(eye_irritation[1:100, ])
 ```
 
 ## Inhalation Toxicity 
@@ -46,7 +37,25 @@ datatable(dermal_toxicity)
 inhalation_toxicity <- read_parquet("../../ICE/data/Acute_Inhalation_Toxicity.parquet") |> 
   select("Product Name", "Active Ingredient", "Test Organism", 
          "Clinical Observations", "Gross Pathology")
-datatable(inhalation_toxicity)
+datatable(inhalation_toxicity[1:100, ])
+```
+
+## Skin
+### Dermal Toxicity
+```{r, message=FALSE}
+dermal_toxicity <- read_parquet("../../ICE/data/Acute_Dermal_Toxicity.parquet") |> 
+  select("Product Name", "Active Ingredient", "Test Organism", 
+         "Dose (mg/kg)", "Clinical Observations", "Gross Pathology")
+datatable(dermal_toxicity[1:100, ])
+```
+
+### Skin Sensitization
+```{r, message=FALSE}
+skin_sensitization <- read_parquet("../../ICE/data/Skin_Sensitization.parquet") |> 
+  select("Chemical Name", "Endpoint",
+  "Species", "tissue", "lesion", "location", 
+  "gene", "pubmedid")
+datatable(skin_sensitization[1:100, ])
 ```
 
 ## Carcinogenic 
@@ -55,6 +64,24 @@ Cancer <- read_parquet("../../ICE/data/Cancer.parquet") |>
   select("Formulation Name", "Chemical Name", "Species", 
          "Level of evidence", "Tissue", "Location", "Lesion", "Response", 
          "PMID")
-datatable(Cancer)
+datatable(Cancer[1:100, ])
+```
+
+## Oral toxicity 
+```{r, message=FALSE}
+Oral_Toxicity <- read_parquet("../../ICE/data/Acute_Oral_Toxicity.parquet") |> 
+  select("Chemical Name", "Endpoint", 
+         "Response", "Species",
+         "PMID")
+datatable(Oral_Toxicity[1:100, ])
+```
+
+## Endocrine Toxicity 
+```{r, message=FALSE}
+Endocrine_Toxicity <- read_parquet("../../ICE/data/Endocrine.parquet") |> 
+  select("Chemical Name", "Endpoint", 
+         "Response", "Receptor Species",
+         "Reference", "Reference 2")
+datatable(Endocrine_Toxicity[1:100, ])
 ```
 
